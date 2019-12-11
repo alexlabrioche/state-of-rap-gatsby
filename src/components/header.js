@@ -1,5 +1,25 @@
-import { graphql, useStaticQuery, Link } from "gatsby";
-import React, { useState } from "react";
+import { graphql, useStaticQuery } from 'gatsby';
+import React, { useState } from 'react';
+import Link from './Link';
+
+function randomColorFromDate() {
+  const rnd = Date.now()
+    .toString()
+    .slice(-1);
+  const colors = [
+    `gray`,
+    `red`,
+    `orange`,
+    `yellow`,
+    `green`,
+    `teal`,
+    `blue`,
+    `indigo`,
+    `purple`,
+    `pink`,
+  ];
+  return colors[rnd];
+}
 
 function Header() {
   const [isExpanded, toggleExpansion] = useState(false);
@@ -14,25 +34,21 @@ function Header() {
   `);
 
   return (
-    <header className="bg-teal-700">
-      <div className="flex flex-wrap items-center justify-between max-w-4xl mx-auto p-4 md:p-8">
-        <Link className="flex items-center no-underline text-white" to="/">
-          <svg
-            className="fill-current h-8 mr-2 w-8"
-            height="54"
-            viewBox="0 0 54 54"
-            width="54"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" />
-          </svg>
-          <span className="font-bold text-xl tracking-tight">
-            {site.siteMetadata.title}
-          </span>
+    <header className="bg-white">
+      <div className="flex flex-wrap items-center justify-between mx-auto p-2 md:p-6">
+        <Link
+          className="flex items-center"
+          color={randomColorFromDate()}
+          decoration="line-through"
+          shade="medium"
+          to="/"
+          variant="h1"
+        >
+          {site.siteMetadata.title}
         </Link>
 
         <button
-          className="block md:hidden border border-white flex items-center px-3 py-2 rounded text-white"
+          className="block md:hidden border border-gray flex items-center px-3 py-2 rounded text-gray-700"
           onClick={() => toggleExpansion(!isExpanded)}
         >
           <svg
@@ -53,21 +69,20 @@ function Header() {
           {[
             {
               route: `/`,
-              title: `Home`
+              title: `Accueil`,
             },
             {
-              route: `/about`,
-              title: `About`
+              route: `/artistes`,
+              title: `Artistes`,
             },
-            {
-              route: `/contact`,
-              title: `Contact`
-            }
-          ].map(link => (
+          ].map((link) => (
             <Link
-              className="block md:inline-block mt-4 md:mt-0 md:ml-6 no-underline text-white"
+              className="block md:inline-block mt-4 md:mt-0 md:ml-6"
+              color="gray"
+              decoration="underline"
               key={link.title}
               to={link.route}
+              variant="h2"
             >
               {link.title}
             </Link>
